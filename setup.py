@@ -40,7 +40,7 @@ setup(
     description="",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/subhadarship/kmeans_pytorch",
+    url="https://github.com/towzeur/kmeans_pytorch",
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
     keywords=[],
