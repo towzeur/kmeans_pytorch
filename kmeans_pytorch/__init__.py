@@ -42,6 +42,7 @@ def kmeans(
     :param tqdm_flag: Allows to turn logs on and off
     :param iter_limit: hard limit for max number of iterations
     :param gamma_for_soft_dtw: approaches to (hard) DTW as gamma -> 0
+    :param debug: device print
     :return: (torch.tensor, torch.tensor) cluster ids, cluster centers
     """
     if debug: print(f'running k-means on {device}..')
