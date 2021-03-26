@@ -26,10 +26,11 @@ def kmeans(
         distance='euclidean',
         cluster_centers=[],
         tol=1e-4,
-        tqdm_flag=True,
+        tqdm_flag=False,
         iter_limit=0,
         device=torch.device('cpu'),
-        gamma_for_soft_dtw=0.001
+        gamma_for_soft_dtw=0.001,
+        debug=False
 ):
     """
     perform kmeans
@@ -43,7 +44,7 @@ def kmeans(
     :param gamma_for_soft_dtw: approaches to (hard) DTW as gamma -> 0
     :return: (torch.tensor, torch.tensor) cluster ids, cluster centers
     """
-    print(f'running k-means on {device}..')
+    if debug: print(f'running k-means on {device}..')
 
     if distance == 'euclidean':
         pairwise_distance_function = partial(pairwise_distance, device=device)
@@ -65,7 +66,7 @@ def kmeans(
     if type(cluster_centers) == list:  # ToDo: make this less annoyingly weird
         initial_state = initialize(X, num_clusters)
     else:
-        print('resuming')
+        if debug: print('resuming')
         # find data point closest to the initial cluster center
         initial_state = cluster_centers
         dis = pairwise_distance_function(X, initial_state)
@@ -124,7 +125,8 @@ def kmeans_predict(
         cluster_centers,
         distance='euclidean',
         device=torch.device('cpu'),
-        gamma_for_soft_dtw=0.001
+        gamma_for_soft_dtw=0.001,
+        debug=False
 ):
     """
     predict using cluster centers
@@ -135,7 +137,7 @@ def kmeans_predict(
     :param gamma_for_soft_dtw: approaches to (hard) DTW as gamma -> 0
     :return: (torch.tensor) cluster ids
     """
-    print(f'predicting on {device}..')
+    if debug: print(f'predicting on {device}..')
 
     if distance == 'euclidean':
         pairwise_distance_function = partial(pairwise_distance, device=device)
@@ -160,7 +162,7 @@ def kmeans_predict(
 
 
 def pairwise_distance(data1, data2, device=torch.device('cpu')):
-    print(f'device is :{device}')
+    #print(f'device is :{device}')
     
     # transfer to device
     data1, data2 = data1.to(device), data2.to(device)
